@@ -5,8 +5,7 @@ const {
   validateIdParam,
   validatePolicyUpdate,
   validatePolicyBody,
-} = require('../middlewares/validation.middleware');
-
+} = require("../middlewares/validation.middleware");
 
 const router = express.Router();
 
@@ -19,11 +18,11 @@ router.post(
 router.get("/", controller.getPolicies);
 router.get("/:id", validateIdParam, controller.getPolicy);
 router.put(
-  '/:id',
-  upload.single('file'),
+  "/:id",
+  upload.single("file"),
   validateIdParam,
   validatePolicyUpdate,
-  controller.updatePolicy
+  controller.updatePolicy,
 );
 
 router.delete("/:id", validateIdParam, controller.deletePolicy);

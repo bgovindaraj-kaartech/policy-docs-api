@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const pool = require("../config/db");
 
 exports.createPolicy = async (data) => {
   const { title, description, file_name, file_data, file_size } = data;
@@ -8,7 +8,7 @@ exports.createPolicy = async (data) => {
      (title, description, file_name, file_data, file_size)
      VALUES ($1,$2,$3,$4,$5)
      RETURNING *`,
-    [title, description, file_name, file_data, file_size]
+    [title, description, file_name, file_data, file_size],
   );
 
   return rows[0];
@@ -17,15 +17,15 @@ exports.createPolicy = async (data) => {
 exports.getAllPolicies = async () => {
   const { rows } = await pool.query(
     `SELECT id, title, description, file_name, file_size, created_at
-     FROM policy_documents`
+     FROM policy_documents ORDER BY created_at DESC`,
   );
   return rows;
 };
 
 exports.getPolicyById = async (id) => {
   const { rows } = await pool.query(
-    'SELECT * FROM policy_documents WHERE id=$1',
-    [id]
+    "SELECT * FROM policy_documents WHERE id=$1",
+    [id],
   );
   return rows[0];
 };
@@ -48,22 +48,19 @@ exports.updatePolicy = async (id, title, description, fileData) => {
       fileData?.file_data ?? null,
       fileData?.file_size ?? null,
       id,
-    ]
+    ],
   );
 
   return rows[0]; // undefined if not found
 };
-
-
 
 exports.deletePolicy = async (id) => {
   const { rows } = await pool.query(
     `DELETE FROM policy_documents
      WHERE id = $1
      RETURNING id`,
-    [id]
+    [id],
   );
 
   return rows[0]; // undefined if not found
 };
-

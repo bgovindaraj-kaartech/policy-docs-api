@@ -46,7 +46,8 @@ exports.updatePolicy = async (req, res, next) => {
     if (!title && !description && !hasFile) {
       return res.status(400).json({
         success: false,
-        message: 'Nothing to update. Provide title, description, or a new PDF file.',
+        message:
+          "Nothing to update. Provide title, description, or a new PDF file.",
       });
     }
 
@@ -54,7 +55,7 @@ exports.updatePolicy = async (req, res, next) => {
     if (hasFile) {
       fileData = {
         file_name: req.file.originalname,
-        file_data: req.file.buffer.toString('base64'),
+        file_data: req.file.buffer.toString("base64"),
         file_size: req.file.size,
       };
     }
@@ -63,26 +64,25 @@ exports.updatePolicy = async (req, res, next) => {
       req.params.id,
       title,
       description,
-      fileData
+      fileData,
     );
 
     if (!updatedPolicy) {
       return res.status(404).json({
         success: false,
-        message: 'Policy file not found',
+        message: "Policy file not found",
       });
     }
 
     res.status(200).json({
       success: true,
-      message: 'Policy updated successfully',
+      message: "Policy updated successfully",
       data: updatedPolicy,
     });
   } catch (err) {
     next(err);
   }
 };
-
 
 exports.deletePolicy = async (req, res, next) => {
   try {
